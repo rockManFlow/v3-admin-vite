@@ -19,6 +19,9 @@ const settingsStore = useSettingsStore()
 
 const { isFocus, handleBlur, handleFocus } = useFocus()
 
+// 额外输入框（可选，不参与提交）
+const extraInput = ref("")
+
 /** 登录表单元素的引用 */
 const loginFormRef = useTemplateRef("loginFormRef")
 
@@ -32,6 +35,7 @@ const codeUrl = ref("")
 const loginFormData: LoginRequestData = reactive({
   username: "admin",
   password: "12345678",
+  extraInput:"",
   code: ""
 })
 
@@ -43,6 +47,9 @@ const loginFormRules: FormRules = {
   password: [
     { required: true, message: "请输入密码", trigger: "blur" },
     { min: 8, max: 16, message: "长度在 8 到 16 个字符", trigger: "blur" }
+  ],
+  extraInput: [
+    { required: true, message: "请输入系统编码", trigger: "blur" }
   ],
   code: [
     { required: true, message: "请输入验证码", trigger: "blur" }
@@ -118,12 +125,24 @@ createCode()
               @focus="handleFocus"
             />
           </el-form-item>
+          <el-form-item>
+            <el-input
+              v-model.trim="extraInput"
+              placeholder="所属系统编码"
+              type="text"
+              tabindex="3"
+              :prefix-icon="Key"
+              size="large"
+              @blur="handleBlur"
+              @focus="handleFocus"
+            />
+          </el-form-item>
           <el-form-item prop="code">
             <el-input
               v-model.trim="loginFormData.code"
               placeholder="验证码"
               type="text"
-              tabindex="3"
+              tabindex="4"
               :prefix-icon="Key"
               maxlength="7"
               size="large"
