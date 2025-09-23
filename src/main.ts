@@ -4,6 +4,7 @@
 import { pinia } from "@/pinia"
 import { router } from "@/router"
 import { installPlugins } from "@/plugins"
+//导入vue入口文件
 import App from "@/App.vue"
 // css
 import "normalize.css"
@@ -19,7 +20,7 @@ const app = createApp(App)
 // 安装插件（全局组件、自定义指令等）
 installPlugins(app)
 
-// 安装 pinia 和 router
+// 安装 pinia 和 router 插件，全局使用
 app.use(pinia).use(router)
 
 // router 准备就绪后挂载应用
